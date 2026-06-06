@@ -1,11 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 35
+    namespace "dev.dotworld.deviceadminsample"
+    compileSdkVersion 36
     defaultConfig {
         applicationId "dev.dotworld.deviceadminsample"
         minSdkVersion 22
-        targetSdkVersion 35
+        targetSdkVersion 36
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
