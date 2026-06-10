@@ -32,7 +32,13 @@ jobs:
     - name: Rename release APK
       run: |
         VERSION_NAME=${{ steps.version.outputs.VERSION_NAME }}
-        mv app/build/outputs/apk/release/app-release.apk "FRP-Bypass-version-${VERSION_NAME}.apk"
+        APK_PATH=$(find app/build/outputs/apk/release -maxdepth 1 -name '*.apk' | head -n 1)
+        if [ -z "$APK_PATH" ]; then
+          echo "Release APK not found in app/build/outputs/apk/release" >&2
+          ls -la app/build/outputs/apk/release
+          exit 1
+        fi
+        mv "$APK_PATH" "FRP-Bypass-version-${VERSION_NAME}.apk"
     - name: Upload APK artifact
       uses: actions/upload-artifact@v4
       with:
