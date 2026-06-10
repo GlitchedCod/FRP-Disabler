@@ -22,11 +22,19 @@ jobs:
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-    - name: Build Debug APK
-      run: ./gradlew assembleDebug --no-daemon
-
+    - name: Get app version name
+      id: version
+      run: |
+        VERSION_NAME=$(grep -Po 'versionName\s*"\K[^"]+' app/build.gradle)
+        echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_OUTPUT
+    - name: Build Release APK
+      run: ./gradlew assembleRelease --no-daemon
+    - name: Rename release APK
+      run: |
+        VERSION_NAME=${{ steps.version.outputs.VERSION_NAME }}
+        mv app/build/outputs/apk/release/app-release.apk "FRP-Bypass-version-${VERSION_NAME}.apk"
     - name: Upload APK artifact
       uses: actions/upload-artifact@v4
       with:
-        name: app-debug-apk
-        path: app/build/outputs/apk/debug/*.apk
+        name: FRP-Bypass-version-${{ steps.version.outputs.VERSION_NAME }}
+        path: FRP-Bypass-version-${{ steps.version.outputs.VERSION_NAME }}.apk

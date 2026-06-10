@@ -1,4 +1,4 @@
-package dev.dotworld.deviceadminsample;
+package frp.bypass;
 
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;

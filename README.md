@@ -10,10 +10,10 @@ Below steps shows hot to enable or disable device admin. This has to be done by 
 ```sh
 adb shell
 # Enable device admin
-dpm set-device-owner --user 0 dev.dotworld.deviceadminsample/.DeviceAdmin
+dpm set-device-owner --user 0 frp.bypass/.DeviceAdmin
 
 # Disable device admin
-dpm remove-active-admin --user 0 dev.dotworld.deviceadminsample/.DeviceAdmin
+dpm remove-active-admin --user 0 frp.bypass/.DeviceAdmin
 ```
 
 ### Setup using User & UI

@@ -1,4 +1,4 @@
-package dev.dotworld.deviceadminsample;
+package frp.bypass;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("dev.dotworld.deviceadminsample", appContext.getPackageName());
+        assertEquals("frp.bypass", appContext.getPackageName());
     }
 }

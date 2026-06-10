@@ -1,4 +1,4 @@
-package dev.dotworld.deviceadminsample;
+package frp.bypass;
 
 import org.junit.Test;
 
