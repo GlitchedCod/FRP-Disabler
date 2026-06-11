@@ -6,10 +6,10 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
-def storeFilePath = keystoreProperties['STORE_FILE'] ?: System.getenv('STORE_FILE')
-def storePassword = keystoreProperties['STORE_PASSWORD'] ?: System.getenv('STORE_PASSWORD')
-def keyAlias = keystoreProperties['KEY_ALIAS'] ?: System.getenv('KEY_ALIAS')
-def keyPassword = keystoreProperties['KEY_PASSWORD'] ?: System.getenv('KEY_PASSWORD')
+def keystoreStoreFile = keystoreProperties['STORE_FILE'] ?: System.getenv('STORE_FILE')
+def keystoreStorePassword = keystoreProperties['STORE_PASSWORD'] ?: System.getenv('STORE_PASSWORD')
+def keystoreKeyAlias = keystoreProperties['KEY_ALIAS'] ?: System.getenv('KEY_ALIAS')
+def keystoreKeyPassword = keystoreProperties['KEY_PASSWORD'] ?: System.getenv('KEY_PASSWORD')
 
 android {
     namespace "frp.bypass"
@@ -24,12 +24,12 @@ android {
     }
     signingConfigs {
         release {
-            if (storeFilePath) {
-                storeFile file(storeFilePath)
+            if (keystoreStoreFile) {
+                storeFile file(keystoreStoreFile)
             }
-            storePassword storePassword
-            keyAlias keyAlias
-            keyPassword keyPassword
+            storePassword keystoreStorePassword
+            keyAlias keystoreKeyAlias
+            keyPassword keystoreKeyPassword
         }
     }
     buildTypes {
