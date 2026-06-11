@@ -24,7 +24,7 @@ jobs:
       run: chmod +x gradlew
     - name: Decode keystore from secret
       run: |
-        printf '%s' "${{ secrets.BASE64_KEYSTORE }}" | base64 --decode > "${{ github.workspace }}/glitchedcod.keystore"
+        printf '%s' "${{ secrets.BASE64_KEYSTORE }}" | base64 --decode > "${{ github.workspace }}/app/glitchedcod.keystore"
     - name: Get app version name
       id: version
       run: |
