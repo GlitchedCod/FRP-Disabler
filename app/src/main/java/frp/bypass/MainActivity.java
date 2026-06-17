@@ -1,7 +1,6 @@
 package frp.bypass;
 
 import android.app.admin.DevicePolicyManager;
-import android.app.admin.FactoryResetProtectionPolicy;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +11,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Toast;
+
+import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -61,17 +62,55 @@ public class MainActivity extends AppCompatActivity {
         DevicePolicyManager mDPM = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
         ComponentName deviceAdminSample = new ComponentName(this, DeviceAdmin.class);
         try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                Log.i(TAG, "Removing device owner via transferOwnership");
-                mDPM.transferOwnership(deviceAdminSample, null, PersistableBundle.EMPTY);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                ComponentName targetAdmin = findTestDpcAdmin(mDPM);
+
+                if (targetAdmin != null) {
+                    Log.i(TAG, "Removing device owner via transferOwnership to " + targetAdmin.flattenToString());
+                    mDPM.transferOwnership(deviceAdminSample, targetAdmin, PersistableBundle.EMPTY);
+                    Toast.makeText(this, "Ownership transferred to " + targetAdmin.getPackageName() + ".", Toast.LENGTH_LONG).show();
+                } else {
+                    Log.e(TAG, "Test DPC is not present as an active admin.");
+                    Toast.makeText(this, "Cannot remove device owner because com.afwsamples.testdpc is not installed as an active admin.", Toast.LENGTH_LONG).show();
+                }
             } else {
                 Log.i(TAG, "Removing device owner via clearDeviceOwnerApp");
                 mDPM.clearDeviceOwnerApp(getPackageName());
+                Toast.makeText(this, "The app was removed as the phone owner of your device.", Toast.LENGTH_LONG).show();
             }
-            Toast.makeText(this, "The app was removed as the phone owner of your device.", Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             Log.e(TAG, "Failed to remove device owner", e);
             Toast.makeText(this, "Failed to remove device owner.", Toast.LENGTH_LONG).show();
         }
+    }
+
+    private ComponentName findTestDpcAdmin(DevicePolicyManager dpm) {
+        List<ComponentName> activeAdmins = dpm.getActiveAdmins();
+        if (activeAdmins == null) {
+            return null;
+        }
+
+        for (ComponentName admin : activeAdmins) {
+            if ("com.afwsamples.testdpc".equals(admin.getPackageName())) {
+                return admin;
+            }
+        }
+
+        return null;
+    }
+
+    private ComponentName findAlternateActiveAdmin(DevicePolicyManager dpm, ComponentName currentAdmin) {
+        List<ComponentName> activeAdmins = dpm.getActiveAdmins();
+        if (activeAdmins == null) {
+            return null;
+        }
+
+        for (ComponentName admin : activeAdmins) {
+            if (!admin.equals(currentAdmin) && !admin.getPackageName().equals(currentAdmin.getPackageName())) {
+                return admin;
+            }
+        }
+
+        return null;
     }
 }
