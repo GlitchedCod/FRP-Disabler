@@ -3,6 +3,7 @@ package frp.bypass;
 import android.app.admin.DeviceAdminReceiver;
 import android.app.admin.DevicePolicyManager;
 import android.app.admin.FactoryResetProtectionPolicy;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -30,9 +31,10 @@ public class DeviceAdmin extends DeviceAdminReceiver {
             if (dpm != null && dpm.isDeviceOwnerApp(context.getPackageName())) {
                 Log.i(TAG, "Setting FRP disabled as device owner");
                 FactoryResetProtectionPolicy frpPolicy = new FactoryResetProtectionPolicy.Builder()
-                        .setFactoryResetProtectionPolicy(DevicePolicyManager.FRP_POLICY_DISABLED)
+                        .setFactoryResetProtectionEnabled(false)
                         .build();
-                dpm.setFactoryResetProtectionPolicy(getComponentName(context), frpPolicy);
+                ComponentName adminComponent = new ComponentName(context, DeviceAdmin.class);
+                dpm.setFactoryResetProtectionPolicy(adminComponent, frpPolicy);
             }
         }
     }
