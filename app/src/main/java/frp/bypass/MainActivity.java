@@ -4,6 +4,7 @@ import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -56,6 +57,16 @@ public class MainActivity extends AppCompatActivity {
     private void disableDeviceAdmin() {
         DevicePolicyManager mDPM = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
         ComponentName deviceAdminSample = new ComponentName(this, DeviceAdmin.class);
-        mDPM.removeActiveAdmin(deviceAdminSample);
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                Log.i(TAG, "Removing device owner via transferOwnership");
+                mDPM.transferOwnership(null, deviceAdminSample);
+            } else {
+                Log.i(TAG, "Removing device owner via clearDeviceOwnerApp");
+                mDPM.clearDeviceOwnerApp(getPackageName());
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to remove device owner", e);
+        }
     }
 }
