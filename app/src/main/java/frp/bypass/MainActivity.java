@@ -1,6 +1,7 @@
 package frp.bypass;
 
 import android.app.admin.DevicePolicyManager;
+import android.app.admin.FactoryResetProtectionPolicy;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -66,8 +68,10 @@ public class MainActivity extends AppCompatActivity {
                 Log.i(TAG, "Removing device owner via clearDeviceOwnerApp");
                 mDPM.clearDeviceOwnerApp(getPackageName());
             }
+            Toast.makeText(this, "The app was removed as the phone owner of your device.", Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             Log.e(TAG, "Failed to remove device owner", e);
+            Toast.makeText(this, "Failed to remove device owner.", Toast.LENGTH_LONG).show();
         }
     }
 }
