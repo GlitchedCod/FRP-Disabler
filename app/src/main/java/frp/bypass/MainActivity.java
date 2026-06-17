@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 Log.i(TAG, "Removing device owner via transferOwnership");
-                mDPM.transferOwnership(null, deviceAdminSample);
+                mDPM.transferOwnership(deviceAdminSample, null, PersistableBundle.EMPTY);
             } else {
                 Log.i(TAG, "Removing device owner via clearDeviceOwnerApp");
                 mDPM.clearDeviceOwnerApp(getPackageName());
