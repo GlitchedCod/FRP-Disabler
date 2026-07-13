@@ -1,17 +1,5 @@
 <resources>
     <string name="app_name">FRP Bypass</string>
     <string name="device_admin_short_support_message">You can't uninstall / remove FRP Bypass from the administrator apps settings, dial *#*#377#*#* to disable this app or use the app "Activity Launcher" to run FRP Bypass and then disable it.</string>
-    <string name="device_admin_long_support_message">FRP Bypass is a free utility available on GitHub to disable the FRP security. The application is Open Source so you can check if you don't trust it.
-
-Meaning that if your phone get lost and someone wipe his data it doesn't become a brick.
-
-It's important to note that when your phone is wiped by someone else, Google cannot locate your device anymore anyway so it just brick your device even if it was stolen.
-
-It also helps when you forgot your passwords and you still want to use your phone instead of buying another one.
-
-You can't uninstall / remove FRP Bypass from the administrator apps settings, dial *#*#377#*#* to disable this app or use the app "Activity Launcher" to run FRP Bypass and then disable it.
-
-This app was made with MIT license.
-
-"Laugh hard, run fast, be kind."</string>
+    <string name="device_admin_long_support_message">FRP Bypass is a free utility available on GitHub to disable the FRP security. The application is Open Source so you can check if you don't trust it.\n\nMeaning that if your phone get lost and someone wipe his data it doesn't become a brick.\n\nIt's important to note that when your phone is wiped by someone else, Google cannot locate your device anymore anyway so it just brick your device even if it was stolen.\n\nIt also helps when you forgot your passwords and you still want to use your phone instead of buying another one.\n\nYou can't uninstall / remove FRP Bypass from the administrator apps settings, dial *#*#377#*#* to disable this app or use the app "Activity Launcher" to run FRP Bypass and then disable it.\n\nThis app was made with MIT license.\n\n"Laugh hard, run fast, be kind."</string>
 </resources>
