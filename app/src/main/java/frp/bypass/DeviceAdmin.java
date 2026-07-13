@@ -26,14 +26,23 @@ public class DeviceAdmin extends DeviceAdminReceiver {
         super.onEnabled(context, intent);
         showToast(context, "Device admin enabled");
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            DevicePolicyManager dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
-            if (dpm != null && dpm.isDeviceOwnerApp(context.getPackageName())) {
-                Log.i(TAG, "Setting FRP disabled as device owner");
+        DevicePolicyManager dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
+        if (dpm != null && dpm.isDeviceOwnerApp(context.getPackageName())) {
+            ComponentName adminComponent = new ComponentName(context, DeviceAdmin.class);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Log.i(TAG, "Setting device owner support messages");
+                dpm.setShortSupportMessage(adminComponent,
+                        context.getString(R.string.device_admin_short_support_message));
+                dpm.setLongSupportMessage(adminComponent,
+                        context.getString(R.string.device_admin_long_support_message));
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                Log.i(TAG, "Setting FRP Disabler as device owner");
                 FactoryResetProtectionPolicy frpPolicy = new FactoryResetProtectionPolicy.Builder()
                         .setFactoryResetProtectionEnabled(false)
                         .build();
-                ComponentName adminComponent = new ComponentName(context, DeviceAdmin.class);
                 dpm.setFactoryResetProtectionPolicy(adminComponent, frpPolicy);
             }
         }
